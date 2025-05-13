@@ -1,3 +1,6 @@
+h1 {
+  color: #ff4081;
+}
 .candidates-container {
     display: flex;
     margin-top: 20px;
@@ -11,25 +14,3 @@
   show-candidates{
     flex: 0 0 60%;
   }
-
-.form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1rem;
-}
-
-.accordion-container {
-    mat-expansion-panel-header{
-        background-color: #e2e2e2;
-    }
-    ul {
-        font-size: 15px;
-    }
-    li {
-        font-size: 13px;
-        margin-left: 20px;
-    }
-}
