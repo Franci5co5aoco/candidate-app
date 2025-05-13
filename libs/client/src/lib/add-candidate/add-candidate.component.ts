@@ -32,7 +32,7 @@ export class AddCandidateComponent {
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
     surname: ['', [Validators.required,  Validators.minLength(3), Validators.maxLength(20)]],
     seniority: ['junior', [Validators.required]],
-    yearsOfExperience: [0, [Validators.required, Validators.min(0), Validators.max(70)]],
+    years: [0, [Validators.required, Validators.min(0), Validators.max(70)]],
     availability: [true]
   });
 

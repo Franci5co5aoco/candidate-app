@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx';
 })
 export class CandidatesService {
 
-  generateExcell(jsonData: Pick<Candidate, 'seniority' | 'yearsOfExperience' | 'availability'>): FormData {
+  generateExcell(jsonData: Pick<Candidate, 'seniority' | 'years' | 'availability'>): FormData {
     // Convert JSON to a sheet and a book
     const worksheet = XLSX.utils.json_to_sheet([jsonData]);
     const workbook = XLSX.utils.book_new();
@@ -18,7 +18,7 @@ export class CandidatesService {
     const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const formData = new FormData();
     // Add the Excell file
-    formData.append('file', excelBlob, 'data.xlsx');
+    formData.append('excel', excelBlob, 'data.xlsx');
 
     return formData;
   }

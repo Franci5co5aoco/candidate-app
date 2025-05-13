@@ -2,6 +2,6 @@ export interface Candidate {
     name: string;
     surname: string;
     seniority: 'junior' | 'senior';
-    yearsOfExperience: number;
+    years: number;
     availability: boolean;
   }

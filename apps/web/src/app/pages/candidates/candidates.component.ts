@@ -21,10 +21,9 @@ export class CandidatesComponent {
   private candidatesHttpService = inject(CandidatesHttpService);
 
   onSubmit(formValues: Candidate) {
-    console.log('Form submited:', formValues);
     const jsonToExcellData = {
       seniority: formValues.seniority as 'junior' | 'senior',
-      yearsOfExperience: formValues.yearsOfExperience || 0,
+      years: formValues.years || 0,
       availability: formValues.availability || true
     }
 
@@ -37,8 +36,7 @@ export class CandidatesComponent {
     };
 
     // Appends the JSON data to the FormData object
-    formData.append('json', JSON.stringify(jsonData));
-    console.log('formData:', formData);
+    formData.append('data', JSON.stringify(jsonData));
     
     // Send the FormData object to the server
     this.candidatesHttpService.postCandidate(formData).subscribe({ 

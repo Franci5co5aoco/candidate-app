@@ -1,14 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CreateCandidateDto } from './dto/create-candidate.dto';
-import { inject } from '@angular/core';
+import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { CandidatesService } from './candidates.service';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('candidates')
 export class CandidatesController {
-    private candidatesService = inject(CandidatesService);
+    constructor(private readonly candidatesService: CandidatesService) {}
 
     @Post()
-    async create(@Body() createCandidateDto: any) {
-        return this.candidatesService.create(createCandidateDto);
+    @UseInterceptors(FileInterceptor('excel'))
+    async create(
+        @UploadedFile() excel: Express.Multer.File,
+        @Body('data') data: string) {
+        return this.candidatesService.create(data, excel);
     }
 }
