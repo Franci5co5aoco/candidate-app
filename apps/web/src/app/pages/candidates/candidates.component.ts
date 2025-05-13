@@ -10,18 +10,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CandidatesService } from './candidates.service';
 import { CandidatesHttpService } from './candidates-http.service';
+import { AddCandidateComponent, ShowCandidatesComponent } from '@candidate-app/client';
 
 @Component({
   selector: 'app-candidates',
   imports: [
     CommonModule,
+    AddCandidateComponent,
+    ShowCandidatesComponent,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
     MatSlideToggleModule,
-
     MatExpansionModule,
 ],
   templateUrl: './candidates.component.html',
