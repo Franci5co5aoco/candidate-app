@@ -24,5 +24,19 @@ export class CandidatesService {
 
     return formData;
   }
+
+  saveCandidateData(candidates: Candidate[]) {
+    localStorage.setItem('candidates', JSON.stringify(candidates));
+  }
   
+  getCandidateData(): Candidate[] | null  {
+    const candidates = localStorage.getItem('candidates');
+    return candidates ? JSON.parse(candidates) : null;
+  }
+
+  resetCandidateData() {
+    this.candidates.set([]);
+    localStorage.removeItem('candidates');
+  }
+
 }

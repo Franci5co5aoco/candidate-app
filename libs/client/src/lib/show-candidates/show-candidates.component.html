@@ -1,4 +1,13 @@
 <div class="container">
+  <div class="container-button">
+    <button
+        mat-raised-button
+        [disabled]="!candidates().length"
+        (click)="resetData()"
+        class="demo-button">
+      Reset data
+    </button>
+  </div>
     <table mat-table [dataSource]="candidates()" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>

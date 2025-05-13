@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
 import { CandidatesService } from './candidates.service';
@@ -16,16 +16,27 @@ import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesCompone
   templateUrl: './candidates.component.html',
   styleUrl: './candidates.component.scss',
 })
-export class CandidatesComponent {
+export class CandidatesComponent implements OnInit {
   private candidatesService = inject(CandidatesService);
   private candidatesHttpService = inject(CandidatesHttpService);
   candidates = this.candidatesService.candidates;
+  
+  ngOnInit(): void {
+    const candidates = this.candidatesService.getCandidateData();
+    if (candidates) {
+      this.candidates.set(candidates);
+    }
+  }
+
+  onResetData() {
+    this.candidatesService.resetCandidateData();
+  }
 
   onSubmit(formValues: Candidate) {
     const jsonToExcellData = {
       seniority: formValues.seniority as 'junior' | 'senior',
       years: formValues.years || 0,
-      availability: formValues.availability || true
+      availability: formValues.availability
     }
 
     // Get FormData
@@ -42,9 +53,8 @@ export class CandidatesComponent {
     // Send the FormData object to the server
     this.candidatesHttpService.postCandidate(formData).subscribe({ 
       next: (response) => {
-        console.log('Response from server:', response);
         this.candidates.update((prev) => [...prev, response]);
-        console.log('this.candidatesService.candidates:', this.candidatesService.candidates());
+        this.candidatesService.saveCandidateData(this.candidatesService.candidates());
       },
       error: (error) => {
         console.error('Error uploading file:', error);
