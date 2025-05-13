@@ -1,16 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
-import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CandidatesService } from './candidates.service';
 import { CandidatesHttpService } from './candidates-http.service';
-import { AddCandidateComponent, ShowCandidatesComponent } from '@candidate-app/client';
+import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesComponent } from '@candidate-app/client';
 
 @Component({
   selector: 'app-candidates',
@@ -18,38 +11,14 @@ import { AddCandidateComponent, ShowCandidatesComponent } from '@candidate-app/c
     CommonModule,
     AddCandidateComponent,
     ShowCandidatesComponent,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatRadioModule,
-    MatSlideToggleModule,
-    MatExpansionModule,
-],
+    PleaseReadBannerComponent,
+  ],
   templateUrl: './candidates.component.html',
   styleUrl: './candidates.component.scss',
 })
 export class CandidatesComponent {
-  private fb = inject(FormBuilder);
   private candidatesService = inject(CandidatesService);
   private candidatesHttpService = inject(CandidatesHttpService);
-
-  candidate: Candidate = {
-    name: '',
-    surname: '',
-    seniority: 'junior',
-    yearsOfExperience: 0,
-    availability: true
-  };
-
-
-  candidateForm = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-    surname: ['', [Validators.required,  Validators.minLength(3), Validators.maxLength(20)]],
-    seniority: ['junior', [Validators.required]],
-    yearsOfExperience: [0, [Validators.required, Validators.min(0), Validators.max(70)]],
-    availability: [true]
-  });
 
   onSubmit(formValues: Candidate) {
     console.log('Form submitteed:', formValues);
