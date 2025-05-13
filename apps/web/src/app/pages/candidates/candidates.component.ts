@@ -21,7 +21,7 @@ export class CandidatesComponent {
   private candidatesHttpService = inject(CandidatesHttpService);
 
   onSubmit(formValues: Candidate) {
-    console.log('Form submitteed:', formValues);
+    console.log('Form submited:', formValues);
     const jsonToExcellData = {
       seniority: formValues.seniority as 'junior' | 'senior',
       yearsOfExperience: formValues.yearsOfExperience || 0,
