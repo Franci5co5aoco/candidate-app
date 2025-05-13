@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
+import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
@@ -42,7 +42,6 @@ export class CandidatesComponent {
     availability: true
   };
 
-  
 
   candidateForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -52,36 +51,34 @@ export class CandidatesComponent {
     availability: [true]
   });
 
-  onSubmit() {
-    if (this.candidateForm.valid) {
-      const formValues = this.candidateForm.value;
-      console.log('Form submitted:', formValues);
-      const jsonToExcellData = {
-        seniority: formValues.seniority as 'junior' | 'senior',
-        yearsOfExperience: formValues.yearsOfExperience || 0,
-        availability: formValues.availability || true
-      }
-      const formData = this.candidatesService.generateExcell(jsonToExcellData);
-
-      const jsonData = {
-        name: formValues.name,
-        surname: formValues.surname,
-      };
-
-      // Appends the JSON data to the FormData object
-      formData.append('json', JSON.stringify(jsonData));
-      console.log('formData:', formData);
-      // Send the FormData object to the server
-      this.candidatesHttpService.postCandidate(formData).subscribe({ 
-        next: (response) => {
-          console.log('Response from server:', response);
-        },
-        error: (error) => {
-          console.error('Error uploading file:', error);
-        }
-      });
-    } else {
-      console.log('Form is invalid');
+  onSubmit(formValues: Candidate) {
+    console.log('Form submitteed:', formValues);
+    const jsonToExcellData = {
+      seniority: formValues.seniority as 'junior' | 'senior',
+      yearsOfExperience: formValues.yearsOfExperience || 0,
+      availability: formValues.availability || true
     }
+
+    // Get FormData
+    const formData = this.candidatesService.generateExcell(jsonToExcellData);
+
+    const jsonData = {
+      name: formValues.name,
+      surname: formValues.surname,
+    };
+
+    // Appends the JSON data to the FormData object
+    formData.append('json', JSON.stringify(jsonData));
+    console.log('formData:', formData);
+    
+    // Send the FormData object to the server
+    this.candidatesHttpService.postCandidate(formData).subscribe({ 
+      next: (response) => {
+        console.log('Response from server:', response);
+      },
+      error: (error) => {
+        console.error('Error uploading file:', error);
+      }
+    });
   }
 }

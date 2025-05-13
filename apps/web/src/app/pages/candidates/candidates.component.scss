@@ -1,3 +1,17 @@
+.candidates-container {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  add-candidate {
+    flex: 0 0 40%;
+    background: rgb(224, 224, 224);
+  }
+  
+  show-candidates{
+    flex: 0 0 60%;
+  }
+
 .form-container {
     display: flex;
     flex-direction: column;

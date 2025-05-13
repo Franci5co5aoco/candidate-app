@@ -1,1 +1,40 @@
-<p>add-candidate works!</p>
+<form [formGroup]="candidateForm" (ngSubmit)="onSubmit()" class="form-container">
+    <h2>Add a new candidate</h2>
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+            <mat-error *ngIf="candidateForm.get('name')?.hasError('required')">
+                Name is required
+            </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Surname</mat-label>
+        <input matInput formControlName="surname">
+        <mat-error *ngIf="candidateForm.get('surname')?.hasError('required')">
+            Surname is required
+        </mat-error>
+    </mat-form-field>
+
+    <label for="seniority">Seniority</label>
+    <mat-radio-group formControlName="seniority">
+        <mat-radio-button value="junior" [checked]="true">Junior</mat-radio-button>
+        <mat-radio-button value="senior">Senior</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Years of Experience</mat-label>
+        <input matInput type="number" formControlName="yearsOfExperience" [min]="0">
+    </mat-form-field>
+    <mat-error *ngIf="candidateForm.get('yearsOfExperience')?.hasError('required')">
+        Please select years of experience
+    </mat-error>
+
+    <mat-slide-toggle formControlName="availability">Available for work</mat-slide-toggle>
+    
+
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="candidateForm.invalid">
+        Submit
+    </button>
+</form>
