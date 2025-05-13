@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Candidate } from '@candidate-app/shared';
 import * as XLSX from 'xlsx';
 
@@ -6,6 +6,8 @@ import * as XLSX from 'xlsx';
   providedIn: 'root'
 })
 export class CandidatesService {
+
+  candidates = signal<Candidate[]>([]);
 
   generateExcell(jsonData: Pick<Candidate, 'seniority' | 'years' | 'availability'>): FormData {
     // Convert JSON to a sheet and a book

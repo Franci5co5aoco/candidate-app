@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
 import { CandidatesService } from './candidates.service';
@@ -19,6 +19,7 @@ import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesCompone
 export class CandidatesComponent {
   private candidatesService = inject(CandidatesService);
   private candidatesHttpService = inject(CandidatesHttpService);
+  candidates = this.candidatesService.candidates;
 
   onSubmit(formValues: Candidate) {
     const jsonToExcellData = {
@@ -42,6 +43,8 @@ export class CandidatesComponent {
     this.candidatesHttpService.postCandidate(formData).subscribe({ 
       next: (response) => {
         console.log('Response from server:', response);
+        this.candidates.update((prev) => [...prev, response]);
+        console.log('this.candidatesService.candidates:', this.candidatesService.candidates());
       },
       error: (error) => {
         console.error('Error uploading file:', error);

@@ -3,5 +3,5 @@
 <!-- Components -->
 <div class="candidates-container">
     <add-candidate (submitted)="onSubmit($event)"></add-candidate>
-    <show-candidates></show-candidates>
+    <show-candidates [candidates]="candidates"></show-candidates>
 </div>
