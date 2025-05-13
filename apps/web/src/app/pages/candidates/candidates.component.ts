@@ -4,6 +4,7 @@ import { Candidate } from '@candidate-app/shared';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -18,6 +19,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatButtonModule,
     MatRadioModule,
     MatSlideToggleModule,
+
+    MatExpansionModule,
 ],
   templateUrl: './candidates.component.html',
   styleUrl: './candidates.component.scss',
