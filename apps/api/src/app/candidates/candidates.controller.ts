@@ -2,6 +2,7 @@ import { Body, Controller, Post, UploadedFile, UseInterceptors } from '@nestjs/c
 import { CandidatesService } from './candidates.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateCandidateDto } from './dto/create-candidate.dto';
+import { Express } from 'express';
 
 @Controller('candidates')
 export class CandidatesController {
