@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 export class CandidatesService {
 
   candidates = signal<Candidate[]>([]);
+  isCandidateAdded = signal<boolean>(false);
 
   generateExcell(jsonData: Pick<Candidate, 'seniority' | 'years' | 'availability'>): FormData {
     // Convert JSON to a sheet and a book

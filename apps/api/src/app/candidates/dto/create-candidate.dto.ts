@@ -1,4 +1,7 @@
+import { IsString, IsNotEmpty } from 'class-validator';
+
 export class CreateCandidateDto {
-    name: string;
-    surname: string;
-    }
+    @IsString()
+    @IsNotEmpty()
+    data: string;
+}

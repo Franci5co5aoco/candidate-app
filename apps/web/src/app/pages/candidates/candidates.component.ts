@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
-import { CandidatesService } from './candidates.service';
+import { CandidatesService } from '@candidate-app/client';
 import { CandidatesHttpService } from './candidates-http.service';
 import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesComponent } from '@candidate-app/client';
-
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-candidates',
   imports: [
@@ -12,6 +12,7 @@ import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesCompone
     AddCandidateComponent,
     ShowCandidatesComponent,
     PleaseReadBannerComponent,
+    MatSnackBarModule
   ],
   templateUrl: './candidates.component.html',
   styleUrl: './candidates.component.scss',
@@ -19,7 +20,10 @@ import { AddCandidateComponent, PleaseReadBannerComponent, ShowCandidatesCompone
 export class CandidatesComponent implements OnInit {
   private candidatesService = inject(CandidatesService);
   private candidatesHttpService = inject(CandidatesHttpService);
+  private snackBar = inject(MatSnackBar);
+
   candidates = this.candidatesService.candidates;
+  isCandidateAdded = false;
   
   ngOnInit(): void {
     const candidates = this.candidatesService.getCandidateData();
@@ -30,6 +34,15 @@ export class CandidatesComponent implements OnInit {
 
   onResetData() {
     this.candidatesService.resetCandidateData();
+  }
+
+  // Method to refacto in a service
+  showSuccess() {
+    this.snackBar.open('Candidate added successfully!', 'Close', {
+      duration: 3500,
+      verticalPosition: 'top',
+      horizontalPosition: 'right'
+    });
   }
 
   onSubmit(formValues: Candidate) {
@@ -55,6 +68,8 @@ export class CandidatesComponent implements OnInit {
       next: (response) => {
         this.candidates.update((prev) => [...prev, response]);
         this.candidatesService.saveCandidateData(this.candidatesService.candidates());
+        this.candidatesService.isCandidateAdded.set(true);
+        this.showSuccess();
       },
       error: (error) => {
         console.error('Error uploading file:', error);
