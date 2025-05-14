@@ -8,8 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class CandidatesHttpService {
   private http = inject(HttpClient);
+  private API_URL = 'http://localhost:3000/api/candidates';
 
   postCandidate(formData: FormData): Observable<Candidate> {
-    return this.http.post<Candidate>('http://localhost:3000/api/candidates', formData);
+    return this.http.post<Candidate>(this.API_URL, formData);
   }
 }

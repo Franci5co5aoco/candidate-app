@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Candidate } from '@candidate-app/shared';
 import { CandidatesService } from '@candidate-app/client';
@@ -18,16 +18,14 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './candidates.component.scss',
 })
 export class CandidatesComponent implements OnInit {
-  private candidatesService = inject(CandidatesService);
   private candidatesHttpService = inject(CandidatesHttpService);
-  private snackBar = inject(MatSnackBar);
-
-  candidates = this.candidatesService.candidates;
-  isCandidateAdded = false;
+  snackBar = inject(MatSnackBar);
+  candidatesService = inject(CandidatesService);
+  candidates: WritableSignal<Candidate[]> = this.candidatesService.candidates;
   
   ngOnInit(): void {
     const candidates = this.candidatesService.getCandidateData();
-    if (candidates) {
+    if (candidates && candidates.length) {
       this.candidates.set(candidates);
     }
   }
